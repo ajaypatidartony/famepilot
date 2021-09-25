@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mukta', sans-serif;
+            background-color: rgb(192, 181, 184);
+            margin: 0;
+            padding: 0;
+        }
+
+        #registration_form {
+            width: 40%;
+            background-color: rgb(107, 56, 69);
+            padding: 1rem;
+            margin: auto;
+            margin-top: 5%;
+        }
+
+        #registration_form>div {
+            display: flex;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        #registration_form>div input,
+        label {
+            flex: 0 0 50%;
+        }
+
+        #signup {
+            border: none;
+            outline: none;
+            margin: 1rem;
+            padding: 0.5rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        #signup:hover {
+            background-color: rgb(192, 181, 184);
+        }
+
+        #registration_form>div input {
+            background-color: rgb(192, 181, 184);
+            border: none;
+            padding: 0.3rem;
+        }
+
+        h1,
+        a,
+        label {
+            color: rgb(192, 181, 184);
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="registration_form">
+
+        <h1 id="heading">Registration Form</h1>
+        <div>
+            <label>Enter Username </label>
+            <input type="text" id="username" name="username" />
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="Password" id="password" name="password" />
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirm_password" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" id="email" name="email" />
+        </div>
+        <div>
+            <label>Address</label>
+            <input type="text" id="address" name="address" />
+        </div>
+        <div>
+            <label>DOB</label>
+            <input type="date" id="dob" name="dob" />
+        </div>
+        <div>
+            <label>Phone</label>
+            <input type="text" id="phone" name="phone" />
+        </div>
+
+        <input type="submit" value="Sign Up" id="signup" /><br>
+        <label>Already Registered <a href="./login.html">Login here</a></label>
+    </form>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+    $("#registration_form").submit(function (event) {
+
+
+        event.preventDefault();
+
+        let password = $("#password").val();
+        let cnfpswd = $("#confirmPassword").val();
+        let username = $("#username").val();
+        let email = $("#email").val();
+        let address = $("#address").val();
+        let dob = $("#dob").val();
+        let phone = $("#phone").val();
+        if (!password || !cnfpswd || !email || !username || !address || !dob || !phone) {
+            alert("all fields are required");
+            return false;
+        }
+        if (password != cnfpswd) {
+            alert("password and confirm password didn't match");
+            return false;
+        }
+        let user_data = { username, password, email, address, dob, phone };
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/api/user_registration/",
+            data: user_data,
+            method: 'POST',
+            success: function (result) {
+                console.log("sucessfull");
+                console.log(result);
+                window.location = "./login.html"
+            },
+            error: function (err) { console.log("error", err) }
+        });
+    });
+
+</script>
+
+</html>

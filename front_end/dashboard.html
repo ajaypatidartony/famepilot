@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgba(201, 182, 182, 0.5);
+            font-family: 'Mukta', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #closebtn {
+            position: fixed;
+            top: 0;
+            right: 0;
+            font-size: 2rem;
+            font-weight: bolder;
+        }
+
+        #updateForm {
+            width: 40%;
+            margin: auto;
+            margin-top: 5rem;
+            padding: 2rem;
+            background-color: #fff;
+
+        }
+
+        .user_info {
+            width: 30rem;
+            height: auto;
+            margin: auto;
+            margin-top: 10%;
+            background-color: rgb(107, 56, 69);
+            color: rgb(192, 181, 184);
+            font-size: 1.3rem;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 0.3rem;
+            padding: 1rem;
+        }
+
+        .user_info>div {
+            display: flex;
+            padding: 0.5rem;
+        }
+
+        .user_info>div>span {
+            flex: 0 0 50%;
+        }
+
+        .logout_btn {
+            border: none;
+            outline: none;
+            background-color: rgb(107, 56, 69);
+            color: #fff;
+            padding: 0.5rem;
+            font-size: 1.1rem;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        if (!window.localStorage.getItem("user")) {
+            window.location = "./login.html";
+        }
+        const loggedin_user = JSON.parse(window.localStorage.getItem("user"));
+        window.setTimeout(function () {
+            window.localStorage.removeItem("user");
+            alert("session Timeout");
+            window.location = "./login.html";
+        }, 300000);
+
+    </script>
+    <div class="header">
+        <span class="title"></span>
+        <span><button onclick="logout()" class="logout_btn">Logout</button></span>
+    </div>
+    <div class="user_info">
+
+    </div>
+    <script>
+        function logout() {
+            window.localStorage.removeItem("user");
+            window.location = "./login.html";
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(".title").text(`Welcome ${loggedin_user['username']}`);
+        let node = $(".user_info");
+        let html = ``;
+        html += `<div><span><b>Username: </b></span><span>${loggedin_user['username']}</span></div>`;
+        html += `<div><span><b>Email: </b></span><span>${loggedin_user['email']}</span></div>`;
+        html += `<div><span><b>Address: </b></span><span>${loggedin_user['address']}</span></div>`;
+        html += `<div><span><b>DOB: </b></span><span>${loggedin_user['dob']}</span></div>`;
+        html += `<div><span><b>Phone: </b></span><span>${loggedin_user['phone']}</span></div>`;
+
+        node.html(html);
+    </script>
+</body>
+
+</html>
