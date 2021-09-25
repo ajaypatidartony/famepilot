@@ -12,6 +12,7 @@ from .models import User
 
 from .serializers import ( RegistrationSerializer , LoginSerializer , UserSerializer)
 
+# registration method for registring new user
 class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
@@ -25,7 +26,7 @@ class RegistrationAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
+# login method when user need to login.
 class LoginAPIView(APIView):
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)

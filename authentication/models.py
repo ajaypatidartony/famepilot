@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    
+    # for creating superuser
     def create_superuser(self, username, email, password):
 
         if password is None:
@@ -41,7 +41,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-
+# blueprint of user info i.e. how many column in their info
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(db_index=True, unique=True)
